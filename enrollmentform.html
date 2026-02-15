@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Course Enrollment</title>
+    <style>
+        /* Soft aesthetic vibes */
+        body {
+            background-color: #f3f0ff; 
+            font-family: 'Comic Sans MS', sans-serif; /* A bit more casual/student feel */
+            display: flex;
+            padding-top: 50px;
+            justify-content: center;
+        }
+
+        /* The main square container */
+        .enroll-box {
+            background: white;
+            border: 3px solid #dcd3ff;
+            border-radius: 20px;
+            padding: 25px;
+            width: 400px;
+            box-shadow: 8px 8px 0px #dcd3ff; /* Cute offset shadow */
+        }
+
+        h2 {
+            color: #7b61ff;
+            text-align: center;
+            margin-top: 0;
+        }
+
+        .row {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="text"], select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        /* Make the radio buttons look a bit organized */
+        .radio-set {
+            background: #fdfdfd;
+            padding: 8px;
+            border: 1px dashed #ccc;
+            border-radius: 10px;
+        }
+
+        /* Hide the experience box by default */
+        #expDetailSection {
+            display: none; 
+            margin-top: 10px;
+        }
+
+        button {
+            width: 100%;
+            background-color: #a594f9;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #7b61ff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="enroll-box">
+    <h2>Join the Class! 📚</h2>
+    
+    <form id="enrollForm">
+        <div class="row">
+            <label>Student Name</label>
+            <input type="text" id="studName" placeholder="Your name here...">
+        </div>
+
+        <div class="row">
+            <label>Email Address</label>
+            <input type="text" id="studEmail" placeholder="example@email.com">
+        </div>
+
+        <div class="row">
+            <label>Select Course</label>
+            <select id="coursePick">
+                <option value="">-- Select --</option>
+                <option value="web">Web Development</option>
+                <option value="design">UI/UX Design</option>
+                <option value="python">Python Basics</option>
+            </select>
+        </div>
+
+        <div class="row">
+            <label>Mode of Study:</label>
+            <div class="radio-set">
+                <input type="radio" name="mode" value="Online"> Online 💻
+                <input type="radio" name="mode" value="Offline"> Offline 🏫
+            </div>
+        </div>
+
+        <div class="row">
+            <label>Any Previous Experience?</label>
+            <div class="radio-set">
+                <input type="radio" name="hasExp" value="Yes" onclick="toggleExp(true)"> Yes
+                <input type="radio" name="hasExp" value="No" onclick="toggleExp(false)" checked> No
+            </div>
+        </div>
+
+        <!-- This section shows/hides based on the radio button -->
+        <div id="expDetailSection" class="row">
+            <label>Tell us about your experience:</label>
+            <textarea id="expText" rows="3" placeholder="What have you done before?"></textarea>
+        </div>
+
+        <button type="submit">Enroll Now ✨</button>
+    </form>
+</div>
+
+<script>
+    // This function hides or shows the extra text box
+    function toggleExp(isYes) {
+        const box = document.getElementById('expDetailSection');
+        box.style.display = isYes ? 'block' : 'none';
+    }
+
+    document.getElementById('enrollForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Getting all the inputs
+        const name = document.getElementById('studName').value.trim();
+        const email = document.getElementById('studEmail').value.trim();
+        const course = document.getElementById('coursePick').value;
+        const mode = document.querySelector('input[name="mode"]:checked');
+        const experience = document.querySelector('input[name="hasExp"]:checked').value;
+        const expDetails = document.getElementById('expText').value.trim();
+
+        // Regular expression for email validation (the standard way)
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        // Validation logic
+        if (name === "" || email === "") {
+            alert("Oops! Name and Email are required. 📝");
+            return;
+        }
+
+        if (!emailPattern.test(email)) {
+            alert("That email doesn't look right. Please check it! 📧");
+            return;
+        }
+
+        if (course === "") {
+            alert("Please pick a course you'd like to join! 🎓");
+            return;
+        }
+
+        if (!mode) {
+            alert("Choose whether you want to study Online or Offline! 🌐");
+            return;
+        }
+
+        // Conditional validation for the textarea
+        if (experience === "Yes" && expDetails === "") {
+            alert("Since you have experience, please tell us a little about it! ✍️");
+            return;
+        }
+
+        // Success!
+        alert("Yay! Enrollment sent successfully. See you in class! 🎉");
+        this.reset();
+        toggleExp(false); // Hide the text box again
+    });
+</script>
+
+</body>
+</html>

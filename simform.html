@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIM Card Registration</title>
+    <style>
+       
+        body {
+            background-color: #f0f4f8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+       
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 380px;
+            border: 2px solid #d1e3f0;
+        }
+
+        h2 {
+            text-align: center;
+            color: #5a7d9a;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #444;
+            font-size: 14px;
+        }
+
+        input[type="text"], 
+        input[type="date"], 
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box; 
+        }
+
+        .radio-group {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .checkbox-group {
+            font-size: 13px;
+            margin: 15px 0;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #8db5d4;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #6a96b9;
+        }
+
+        
+        #statusMessage {
+            margin-top: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>SIM Registration</h2>
+    
+    <form id="simForm">
+     
+        <div class="input-group">
+            <label>Full Name</label>
+            <input type="text" name="fullname_barsha" id="fullName_06" placeholder="Enter your name">
+        </div>
+
+       
+        <div class="input-group">
+            <label>Citizenship Number</label>
+            <input type="text" id="citizenNum" placeholder="Min 10 characters">
+        </div>
+
+       
+        <div class="radio-group">
+            <label>SIM Type:</label>
+            <input type="radio" name="simType" value="Prepaid"> Prepaid
+            <input type="radio" name="simType" value="Postpaid"> Postpaid
+        </div>
+
+        
+        <div class="input-group">
+            <label>Date of Birth</label>
+            <input type="date" id="dob">
+        </div>
+
+       
+        <div class="input-group">
+            <label>Nationality</label>
+            <select id="nationality">
+                <option value="">-- Choose One --</option>
+                <option value="American">American</option>
+                <option value="British">British</option>
+                <option value="Canadian">Canadian</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        
+        <div class="checkbox-group">
+            <input type="checkbox" id="terms"> I agree to the Terms & Conditions
+        </div>
+
+        <button type="submit">Complete Registration</button>
+    </form>
+
+    <div id="statusMessage"></div>
+</div>
+
+<script>
+    document.getElementById('simForm').addEventListener('submit', function(e) {
+        e.preventDefault(); 
+        
+        const msg = document.getElementById('statusMessage');
+        msg.style.color = "red"; 
+
+      
+        const name = document.getElementById('fullName').value;
+        const citizen = document.getElementById('citizenNum').value;
+        const simType = document.querySelector('input[name="simType"]:checked');
+        const dob = document.getElementById('dob').value;
+        const nationality = document.getElementById('nationality').value;
+        const terms = document.getElementById('terms').checked;
+
+       
+        const nameRegex = /^[A-Za-z\s]+$/;
+
+        if (!nameRegex.test(name)) {
+            msg.innerText = "Name should only have letters!";
+            return;
+        }
+
+        if (citizen.length < 10) {
+            msg.innerText = "Citizenship number must be 10+ digits!";
+            return;
+        }
+
+        if (!simType) {
+            msg.innerText = "Please pick a SIM type!";
+            return;
+        }
+
+        // Age calculation
+        const birthDate = new Date(dob);
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        
+        if (isNaN(age) || age < 18) {
+            msg.innerText = "You must be 18 or older!";
+            return;
+        }
+
+        if (nationality === "") {
+            msg.innerText = "Select your nationality!";
+            return;
+        }
+
+        if (!terms) {
+            msg.innerText = "Please accept the Terms!";
+            return;
+        }
+
+        msg.style.color = "green";
+        msg.innerText = "Registration Successful! Welcome!";
+        
+        
+    });
+</script>
+
+</body>
+</html>

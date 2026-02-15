@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hospital Appointment Booking</title>
+  <style>
+    :root{
+      --bg:#f5f7fb;
+      --card:#ffffff;
+      --accent:#6b5dd3;
+      --accent-2:#8f7ff3;
+      --muted:#6d6f7a;
+      --border:#e9e9f6;
+      --radius:14px;
+      --shadow: 0 12px 30px rgba(99,84,199,0.10);
+      --glass: rgba(255,255,255,0.6);
+      --success:#10b981;
+      --warning:#f59e0b;
+      --danger:#ef4444;
+    }
+
+    *{box-sizing:border-box}
+    html,body{
+      height:100%; 
+      margin:0; 
+      font-family:Inter, "Segoe UI", Roboto, Arial, sans-serif; 
+      -webkit-font-smoothing:antialiased; 
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    body{
+      background: url('/mnt/kimi/upload/6495906face286999a890d16d9f1d15d.jpg') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+    }
+
+    body::before{
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.1);
+      z-index: -1;
+    }
+
+    .container{
+      max-width:600px;
+      margin:0 auto;
+      padding:36px 20px;
+    }
+
+    .page-title{
+      text-align:center;
+      color:#2b2b3a;
+      margin-bottom:30px;
+      font-size:28px;
+      font-weight:800;
+      text-shadow:0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .card{
+      background: rgba(255, 255, 255, 0.95);
+      border-radius:var(--radius);
+      padding:28px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), 0 8px 25px rgba(0, 0, 0, 0.1);
+      border:1px solid rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(10px);
+    }
+
+    .card-header{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:20px;
+      padding-bottom:16px;
+      border-bottom:2px solid var(--border);
+    }
+
+    .card-icon{
+      width:48px;
+      height:48px;
+      border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      color:white;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      font-size:20px;
+      box-shadow:0 8px 22px rgba(107,79,243,0.12);
+    }
+
+    .card h2{
+      margin:0;
+      font-size:18px;
+      color:#2b2b3a;
+    }
+
+    .card-subtitle{
+      color:var(--muted);
+      font-size:13px;
+      margin-top:4px;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+
+    @media (max-width:480px){
+      .form-grid{ grid-template-columns: 1fr; }
+    }
+
+    label{
+      display:block;
+      font-size:13px;
+      color:#2b2b3a;
+      margin-bottom:6px;
+      font-weight:600;
+    }
+
+    .field{
+      margin-bottom:12px;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="number"],
+    input[type="email"],
+    select,
+    textarea{
+      width:100%;
+      padding:12px 14px;
+      border-radius:10px;
+      border:1px solid var(--border);
+      background:linear-gradient(180deg,#ffffff,#fbfbff);
+      font-size:14px;
+      color:#222;
+      outline:none;
+      transition:box-shadow .12s ease, border-color .12s ease, transform .06s ease;
+    }
+
+    input:focus, select:focus, textarea:focus{
+      border-color:var(--accent);
+      box-shadow:0 10px 26px rgba(107,79,243,0.08);
+      transform:translateY(-1px);
+    }
+
+    .btn{
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      color:white;
+      border:none;
+      padding:12px 20px;
+      border-radius:10px;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:0 12px 30px rgba(107,79,243,0.12);
+      transition:transform .12s ease, box-shadow .12s ease;
+      width:100%;
+      margin-top:8px;
+    }
+
+    .btn:hover{ transform:translateY(-3px); box-shadow:0 18px 40px rgba(107,79,243,0.16); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="page-title">🏥 Hospital Appointment Booking</h1>
+    
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">🏥</div>
+        <div>
+          <h2>Hospital Appointment</h2>
+          <div class="card-subtitle">Book your medical appointment</div>
+        </div>
+      </div>
+      
+      <form id="hospitalForm" onsubmit="return validateHospital()" novalidate>
+        <div class="form-grid">
+          <div class="field">
+            <label for="Barsha_06_name">Patient Name</label>
+            <input type="text" name="Barsha_06_name" id="Barsha_06_name" placeholder="Full Name" required>
+          </div>
+          
+          <div class="field">
+            <label for="Barsha_06_age">Age</label>
+            <input type="number" name="Barsha_06_age" id="Barsha_06_age" min="1" placeholder="Age" required>
+          </div>
+          
+          <div class="field">
+            <label for="Barsha_06_phone">Phone Number</label>
+            <input type="text" name="Barsha_06_phone" id="Barsha_06_phone" placeholder="98xxxxxxxx" required>
+          </div>
+          
+          <div class="field">
+            <label for="Barsha_06_department">Department</label>
+            <select name="Barsha_06_department" id="Barsha_06_department" required>
+              <option value="">-- Select Department --</option>
+              <option value="General Medicine">General Medicine</option>
+              <option value="Cardiology">Cardiology</option>
+              <option value="Orthopedics">Orthopedics</option>
+              <option value="Pediatrics">Pediatrics</option>
+              <option value="Dermatology">Dermatology</option>
+            </select>
+          </div>
+          
+          <div class="field">
+            <label for="Barsha_06_date">Appointment Date</label>
+            <input type="date" name="Barsha_06_date" id="Barsha_06_date" required>
+          </div>
+          
+          <div class="field">
+            <label for="Barsha_06_time">Time Slot</label>
+            <select name="Barsha_06_time" id="Barsha_06_time" required>
+              <option value="">-- Select Time --</option>
+              <option value="09:00 AM">09:00 AM</option>
+              <option value="10:00 AM">10:00 AM</option>
+              <option value="11:00 AM">11:00 AM</option>
+              <option value="02:00 PM">02:00 PM</option>
+              <option value="03:00 PM">03:00 PM</option>
+              <option value="04:00 PM">04:00 PM</option>
+            </select>
+          </div>
+        </div>
+        
+        <button type="submit" class="btn">Book Appointment</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function validateHospital() {
+      const name = document.getElementById('Barsha_06_name').value.trim();
+      const age = parseInt(document.getElementById('Barsha_06_age').value);
+      const phone = document.getElementById('Barsha_06_phone').value.trim();
+      const department = document.getElementById('Barsha_06_department').value;
+      const date = document.getElementById('Barsha_06_date').value;
+      const time = document.getElementById('Barsha_06_time').value;
+
+      const namePattern = /^[A-Za-z\s]+$/;
+      const phoneDigits = phone.replace(/\D/g, '');
+      const phoneStart = phoneDigits.substring(0,2);
+
+      if (!name) { alert('Please enter patient name.'); return false; }
+      if (!namePattern.test(name)) { alert('Name should contain only letters.'); return false; }
+      if (isNaN(age) || age <= 0) { alert('Age must be greater than 0.'); return false; }
+      if (phoneDigits.length !== 10 || (phoneStart !== '98' && phoneStart !== '97')) {
+        alert('Phone must be 10 digits and start with 98 or 97.'); return false;
+      }
+
+      // Date validation - cannot be in past
+      if (date) {
+        const selectedDate = new Date(date);
+        const today = new Date();
+        today.setHours(0,0,0,0);
+        if (selectedDate < today) {
+          alert('Appointment date cannot be in the past.'); return false;
+        }
+      } else {
+        alert('Please select appointment date.'); return false;
+      }
+
+      if (!department) { alert('Please select department.'); return false; }
+      if (!time) { alert('Please select time slot.'); return false; }
+
+      alert(`✅ Appointment Confirmed!\n\nPatient: ${name}\nDepartment: ${department}\nDate: ${date}\nTime: ${time}`);
+      document.getElementById('hospitalForm').reset();
+      return false;
+    }
+
+    // Set minimum date for appointment to today
+    document.addEventListener('DOMContentLoaded', function() {
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('Barsha_06_date').setAttribute('min', today);
+    });
+  </script>
+</body>
+</html>

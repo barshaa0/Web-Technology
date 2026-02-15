@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SIM Card Registration</title>
+  <style>
+    :root{
+      --bg:#f5f7fb;
+      --card:#ffffff;
+      --accent:#6b5dd3;
+      --accent-2:#8f7ff3;
+      --muted:#6d6f7a;
+      --border:#e9e9f6;
+      --radius:14px;
+      --shadow: 0 12px 30px rgba(99,84,199,0.10);
+      --glass: rgba(255,255,255,0.6);
+      --success:#10b981;
+      --warning:#f59e0b;
+      --danger:#ef4444;
+    }
+
+    *{box-sizing:border-box}
+    html,body{
+      height:100%; 
+      margin:0; 
+      font-family:Inter, "Segoe UI", Roboto, Arial, sans-serif; 
+      -webkit-font-smoothing:antialiased; 
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    body{
+      background: url('/mnt/kimi/upload/6495906face286999a890d16d9f1d15d.jpg') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+    }
+
+    body::before{
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.1);
+      z-index: -1;
+    }
+
+    .container{
+      max-width:600px;
+      margin:0 auto;
+      padding:36px 20px;
+    }
+
+    .page-title{
+      text-align:center;
+      color:#2b2b3a;
+      margin-bottom:30px;
+      font-size:28px;
+      font-weight:800;
+      text-shadow:0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .card{
+      background: rgba(255, 255, 255, 0.95);
+      border-radius:var(--radius);
+      padding:28px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), 0 8px 25px rgba(0, 0, 0, 0.1);
+      border:1px solid rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(10px);
+    }
+
+    .card-header{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:20px;
+      padding-bottom:16px;
+      border-bottom:2px solid var(--border);
+    }
+
+    .card-icon{
+      width:48px;
+      height:48px;
+      border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      color:white;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      font-size:20px;
+      box-shadow:0 8px 22px rgba(107,79,243,0.12);
+    }
+
+    .card h2{
+      margin:0;
+      font-size:18px;
+      color:#2b2b3a;
+    }
+
+    .card-subtitle{
+      color:var(--muted);
+      font-size:13px;
+      margin-top:4px;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+
+    @media (max-width:480px){
+      .form-grid{ grid-template-columns: 1fr; }
+    }
+
+    label{
+      display:block;
+      font-size:13px;
+      color:#2b2b3a;
+      margin-bottom:6px;
+      font-weight:600;
+    }
+
+    .field{
+      margin-bottom:12px;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="number"],
+    input[type="email"],
+    select,
+    textarea{
+      width:100%;
+      padding:12px 14px;
+      border-radius:10px;
+      border:1px solid var(--border);
+      background:linear-gradient(180deg,#ffffff,#fbfbff);
+      font-size:14px;
+      color:#222;
+      outline:none;
+      transition:box-shadow .12s ease, border-color .12s ease, transform .06s ease;
+    }
+
+    input:focus, select:focus, textarea:focus{
+      border-color:var(--accent);
+      box-shadow:0 10px 26px rgba(107,79,243,0.08);
+      transform:translateY(-1px);
+    }
+
+    .full{ grid-column: 1 / -1; }
+
+    .radio-row{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      padding:10px;
+      border-radius:10px;
+      border:1px solid rgba(230,230,250,0.6);
+      background:var(--glass);
+      margin-bottom:12px;
+      flex-wrap:wrap;
+    }
+
+    .radio-row label{ margin:0; font-weight:600; color:#2b2b3a; }
+
+    .radio-inline{ display:flex; align-items:center; gap:8px; color:#2b2b3a; font-weight:600; font-size:13px; }
+
+    input[type="radio"], input[type="checkbox"]{ width:16px; height:16px; accent-color:var(--accent); cursor:pointer; }
+
+    .btn{
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      color:white;
+      border:none;
+      padding:12px 20px;
+      border-radius:10px;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:0 12px 30px rgba(107,79,243,0.12);
+      transition:transform .12s ease, box-shadow .12s ease;
+      width:100%;
+      margin-top:8px;
+    }
+
+    .btn:hover{ transform:translateY(-3px); box-shadow:0 18px 40px rgba(107,79,243,0.16); }
+
+    .success-msg{
+      background:linear-gradient(90deg, #d1fae5, #a7f3d0);
+      color:#065f46;
+      padding:12px;
+      border-radius:8px;
+      margin-top:12px;
+      font-weight:600;
+      font-size:13px;
+      display:none;
+      border:1px solid #6ee7b7;
+    }
+
+    .success-msg.show{ display:block; animation:slideIn 0.3s ease; }
+
+    @keyframes slideIn{
+      from{ opacity:0; transform:translateY(-10px); }
+      to{ opacity:1; transform:translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="page-title">📱 SIM Card Registration</h1>
+    
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">📱</div>
+        <div>
+          <h2>SIM Card Registration</h2>
+          <div class="card-subtitle">Register your new SIM card</div>
+        </div>
+      </div>
+      
+      <form id="simForm" onsubmit="return validateSIM()" novalidate>
+        <div class="form-grid">
+          <div class="field">
+            <label for="Barsha_06_fullname">Full Name</label>
+            <input type="text" name="Barsha_06_fullname" id="Barsha_06_fullname" placeholder="Full Name" required>
+          </div>
+          
+          <div class="field">
+            <label for="Barsha_06_citizenship">Citizenship Number</label>
+            <input type="text" name="Barsha_06_citizenship" id="Barsha_06_citizenship" placeholder="Min 10 characters" required>
+          </div>
+          
+          <div class="field">
+            <label for="Barsha_06_dob">Date of Birth</label>
+            <input type="date" name="Barsha_06_dob" id="Barsha_06_dob" required>
+          </div>
+          
+          <div class="field">
+            <label for="Barsha_06_nationality">Nationality</label>
+            <select name="Barsha_06_nationality" id="Barsha_06_nationality" required>
+              <option value="">-- Select --</option>
+              <option value="Nepali">Nepali</option>
+              <option value="Indian">Indian</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          
+          <div class="field full">
+            <div class="radio-row" role="radiogroup" aria-label="SIM Type">
+              <label>SIM Type</label>
+              <div style="flex:1"></div>
+              <label class="radio-inline"><input type="radio" name="Barsha_06_simType" id="Barsha_06_prepaid" value="Prepaid" required> Prepaid</label>
+              <label class="radio-inline"><input type="radio" name="Barsha_06_simType" id="Barsha_06_postpaid" value="Postpaid"> Postpaid</label>
+            </div>
+          </div>
+          
+          <div class="field full">
+            <label for="Barsha_06_terms">
+              <input type="checkbox" name="Barsha_06_terms" id="Barsha_06_terms" style="width:auto; margin-right:8px;" required>
+              I accept Terms & Conditions
+            </label>
+          </div>
+        </div>
+        
+        <button type="submit" class="btn">Register SIM</button>
+        <div id="simSuccess" class="success-msg">✅ SIM Registration Successful!</div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function validateSIM() {
+      const name = document.getElementById('Barsha_06_fullname').value.trim();
+      const citizenship = document.getElementById('Barsha_06_citizenship').value.trim();
+      const dob = document.getElementById('Barsha_06_dob').value;
+      const nationality = document.getElementById('Barsha_06_nationality').value;
+      const simType = document.querySelector('input[name="Barsha_06_simType"]:checked');
+      const terms = document.getElementById('Barsha_06_terms').checked;
+
+      const namePattern = /^[A-Za-z\s]+$/;
+
+      if (!name) { alert('Please enter your full name.'); return false; }
+      if (!namePattern.test(name)) { alert('Name must contain only letters.'); return false; }
+      if (citizenship.length < 10) { alert('Citizenship number must be at least 10 characters.'); return false; }
+      
+      // Age check
+      if (dob) {
+        const birthDate = new Date(dob);
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+        }
+        if (age < 18) { alert('You must be 18 or above to register.'); return false; }
+      } else {
+        alert('Please enter date of birth.'); return false;
+      }
+
+      if (!nationality) { alert('Please select nationality.'); return false; }
+      if (!simType) { alert('Please select SIM type.'); return false; }
+      if (!terms) { alert('You must accept Terms & Conditions.'); return false; }
+
+      document.getElementById('simSuccess').classList.add('show');
+      setTimeout(() => {
+        document.getElementById('simForm').reset();
+        document.getElementById('simSuccess').classList.remove('show');
+      }, 3000);
+      return false;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Entrance Exam Registration</title>
+  <style>
+  
+    :root{
+      --bg:#f5f7fb;
+      --card:#ffffff;
+      --accent:#6b5dd3;
+      --accent-2:#8f7ff3;
+      --muted:#6d6f7a;
+      --border:#e9e9f6;
+      --radius:14px;
+      --shadow: 0 12px 30px rgba(99,84,199,0.10);
+      --glass: rgba(255,255,255,0.6);
+    }
+
+    *{box-sizing:border-box}
+    html,body{
+      height:100%; 
+      margin:0; 
+      font-family:Inter, "Segoe UI", Roboto, Arial, sans-serif; 
+      -webkit-font-smoothing:antialiased; 
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    body{
+      background: url('/mnt/kimi/upload/6495906face286999a890d16d9f1d15d.jpg') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+    }
+
+    /* Optional overlay for better contrast */
+    body::before{
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(0px);
+      z-index: -1;
+    }
+
+    .wrap{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:36px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card{
+      width:760px;
+      max-width:96%;
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:28px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius:var(--radius);
+      padding:28px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), 0 8px 25px rgba(0, 0, 0, 0.1);
+      border:1px solid rgba(255, 255, 255, 0.5);
+      align-items:start;
+      backdrop-filter: blur(10px);
+    }
+
+    /* Left panel: info / branding */
+    .panel{
+      padding:18px 12px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      justify-content:center;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+   
+    .brand h1{
+      margin:0;
+      font-size:20px;
+      color:#2b2b3a;
+      letter-spacing:0.6px;
+    }
+
+    .intro{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.5;
+      margin-top:6px;
+    }
+
+    .features{
+      margin-top:14px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .chip{
+      background:linear-gradient(180deg, rgba(139,108,246,0.08), rgba(139,108,246,0.04));
+      color:var(--accent-2);
+      padding:8px 12px;
+      border-radius:999px;
+      font-weight:600;
+      font-size:13px;
+      border:1px solid rgba(139,108,246,0.06);
+    }
+
+    /* Right panel: form */
+    form{
+      padding:6px 6px 6px 6px;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+
+    label{
+      display:block;
+      font-size:13px;
+      color:#2b2b3a;
+      margin-bottom:6px;
+      font-weight:600;
+    }
+
+    .field{
+      margin-bottom:12px;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="number"],
+    input[type="email"],
+    select,
+    textarea{
+      width:100%;
+      padding:12px 14px;
+      border-radius:10px;
+      border:1px solid var(--border);
+      background:linear-gradient(180deg,#ffffff,#fbfbff);
+      font-size:14px;
+      color:#222;
+      outline:none;
+      transition:box-shadow .12s ease, border-color .12s ease, transform .06s ease;
+    }
+
+    input:focus, select:focus, textarea:focus{
+      border-color:var(--accent);
+      box-shadow:0 10px 26px rgba(107,79,243,0.08);
+      transform:translateY(-1px);
+    }
+
+    textarea{ min-height:110px; resize:vertical; line-height:1.45; }
+
+    .full{ grid-column: 1 / -1; }
+
+    .radio-row{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      padding:10px;
+      border-radius:10px;
+      border:1px solid rgba(230,230,250,0.6);
+      background:var(--glass);
+      margin-bottom:12px;
+    }
+
+    .radio-row label{ margin:0; font-weight:600; color:#2b2b3a; }
+
+    .radio-inline{ display:flex; align-items:center; gap:8px; color:#2b2b3a; font-weight:600; }
+
+    input[type="radio"], input[type="checkbox"]{ width:16px; height:16px; accent-color:var(--accent); cursor:pointer; }
+
+    .note{ font-size:13px; color:var(--muted); margin-top:8px; }
+
+    .actions{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      margin-top:8px;
+    }
+
+    .btn{
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      color:white;
+      border:none;
+      padding:12px 16px;
+      border-radius:10px;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:0 12px 30px rgba(107,79,243,0.12);
+      transition:transform .12s ease, box-shadow .12s ease;
+    }
+
+    .btn:hover{ transform:translateY(-3px); box-shadow:0 18px 40px rgba(107,79,243,0.16); }
+
+    .muted{ color:var(--muted); font-size:13px; }
+
+    .footer{
+      margin-top:14px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    @media (max-width:880px){
+      .card{ grid-template-columns: 1fr; padding:18px; }
+      .form-grid{ grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" role="region" aria-label="Entrance exam registration">
+      <div class="panel" aria-hidden="false">
+        <div class="brand">
+          <div>
+            <h1>Entrance Exam Registration</h1>
+            <div class="intro">Complete the form to apply for the upcoming entrance exam. Provide accurate details — eligibility checks run automatically.</div>
+          </div>
+        </div>
+
+        <div class="features" aria-hidden="true">
+          <div class="chip">Secure</div>
+          <div class="chip">Fast</div>
+          <div class="chip">Verified</div>
+        </div>
+
+        <div class="note">Age eligibility: 16–30. Phone must be 10 digits and start with 98 or 97 (Nepal format). Roll No 06 or name Barsha Timsina reveals a special ID field.</div>
+      </div>
+
+      <form id="examForm" onsubmit="return validateExamForm()" novalidate>
+        <div class="form-grid">
+          <div class="field">
+            <label for="BarshaTimsina_06_fullname">Full Name</label>
+            <!-- Updated format: name = "fullname_rollnumber_actual field name", id = "fullname_rollno_actual field id" -->
+            <input type="text" name="BarshaTimsina_06_fullname" id="BarshaTimsina_06_fullname" placeholder="First Last" required>
+          </div>
+
+          <div class="field">
+            <label for="BarshaTimsina_06_dob">Date of Birth</label>
+            <input type="date" name="BarshaTimsina_06_dob" id="BarshaTimsina_06_dob" required>
+          </div>
+
+          <div class="field">
+            <label for="BarshaTimsina_06_age">Age</label>
+            <input type="number" name="BarshaTimsina_06_age" id="BarshaTimsina_06_age" min="0" placeholder="e.g., 18" required>
+          </div>
+
+          <div class="field">
+            <label for="BarshaTimsina_06_phone">Phone Number</label>
+            <input type="text" name="BarshaTimsina_06_phone" id="BarshaTimsina_06_phone" placeholder="98xxxxxxxx" required>
+          </div>
+
+          <div class="field full">
+            <label for="BarshaTimsina_06_email">Email</label>
+            <input type="email" name="BarshaTimsina_06_email" id="BarshaTimsina_06_email" placeholder="you@example.com" required>
+          </div>
+
+          <div class="field full">
+            <div class="radio-row" role="radiogroup" aria-label="Gender">
+              <label>Gender</label>
+              <div style="flex:1"></div>
+              <label class="radio-inline"><input type="radio" name="BarshaTimsina_06_gender" value="male" required> Male</label>
+              <label class="radio-inline"><input type="radio" name="BarshaTimsina_06_gender" value="female"> Female</label>
+              <label class="radio-inline"><input type="radio" name="BarshaTimsina_06_gender" value="other"> Other</label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="BarshaTimsina_06_stream">Exam Stream</label>
+            <select name="BarshaTimsina_06_stream" id="BarshaTimsina_06_stream" required>
+              <option value="none">-- Select Stream --</option>
+              <option value="Science">Science</option>
+              <option value="Management">Management</option>
+              <option value="Arts">Arts</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="BarshaTimsina_06_rollNo">Roll No</label>
+            <input type="number" name="BarshaTimsina_06_rollNo" id="BarshaTimsina_06_rollNo" placeholder="e.g., 06">
+          </div>
+
+          <!-- Special input: visible only when roll no = 06 or name matches -->
+          <div class="field" id="specialFieldContainer" style="display:none;">
+            <label for="BarshaTimsina_06_specialId">Special ID</label>
+            <input type="text" name="BarshaTimsina_06_specialId" id="BarshaTimsina_06_specialId" placeholder="BarshaTimsina_06">
+          </div>
+
+          <div class="field full">
+            <label for="BarshaTimsina_06_agree"><input type="checkbox" name="BarshaTimsina_06_agree" id="BarshaTimsina_06_agree" style="width:auto; margin-right:8px;" required> I confirm all details are correct</label>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="btn">Submit Application</button>
+        </div>
+
+        <div class="footer">
+
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Show special field when Roll No = 06 or name equals "Barsha Timsina"
+    const nameInput = document.getElementById('BarshaTimsina_06_fullname');
+    const rollInput = document.getElementById('BarshaTimsina_06_rollNo');
+    const specialContainer = document.getElementById('specialFieldContainer');
+    const specialInput = document.getElementById('BarshaTimsina_06_specialId');
+
+    function updateSpecialVisibility() {
+      const nameVal = (nameInput.value || '').trim().toLowerCase();
+      const rollVal = (rollInput.value || '').toString().trim();
+      if ( (nameVal === 'barsha timsina') || rollVal === '06' || rollVal === '6' ) {
+        specialContainer.style.display = 'block';
+        specialInput.required = true;
+        // prefill special input with requested id if empty
+        if (!specialInput.value) specialInput.value = 'BarshaTimsina_06';
+      } else {
+        specialContainer.style.display = 'none';
+        specialInput.required = false;
+        specialInput.value = '';
+      }
+    }
+
+    nameInput.addEventListener('input', updateSpecialVisibility);
+    rollInput.addEventListener('input', updateSpecialVisibility);
+
+    // Validation logic
+    function validateExamForm() {
+      const name = nameInput.value.trim();
+      const age = parseInt(document.getElementById('BarshaTimsina_06_age').value, 10);
+      const phone = document.getElementById('BarshaTimsina_06_phone').value.trim();
+      const stream = document.getElementById('BarshaTimsina_06_stream').value;
+      const agree = document.getElementById('BarshaTimsina_06_agree').checked;
+
+      const namePattern = /^[A-Za-z\s]+$/;
+
+      if (!name) { alert('Please enter your full name.'); return false; }
+      if (!namePattern.test(name)) { alert('Name should contain only letters and spaces.'); return false; }
+
+      if (isNaN(age)) { alert('Please enter a valid age.'); return false; }
+      if (age < 16 || age > 30) { alert('Age must be between 16 and 30.'); return false; }
+
+      // phone digits only
+      const digits = phone.replace(/\D/g, '');
+      const start = digits.substring(0,2);
+      if (digits.length !== 10 || (start !== '98' && start !== '97')) {
+        alert('Phone must be 10 digits and start with 98 or 97.');
+        return false;
+      }
+
+      if (stream === 'none') { alert('Please select an exam stream.'); return false; }
+
+      if (!agree) { alert('Please confirm that all details are correct.'); return false; }
+
+      // if special visible, ensure filled
+      if (specialContainer.style.display === 'block' && !specialInput.value.trim()) {
+        alert('Please fill the special ID field.');
+        return false;
+      }
+
+      alert('Form submitted successfully. Preparing your application preview.');
+      // Demo: reset after short delay
+      setTimeout(() => { document.getElementById('examForm').reset(); updateSpecialVisibility(); }, 900);
+      return false; // prevent actual submission in demo
+    }
+
+    // Initialize visibility on load
+    updateSpecialVisibility();
+  </script>
+</body>
+</html>
